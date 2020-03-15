@@ -47,3 +47,27 @@ img {
     
 }
 
+.fadeOut{
+    opacity:0;
+    width:0;
+    height:0;
+   
+    transition: .3s;
+    
+}
+
+
+
+.zoom {
+
+    
+    /* transition: all; */
+    transition-duration: 0.4s;
+    
+    transform: scale(150);
+    background-color: lime;
+    
+    
+
+   
+}

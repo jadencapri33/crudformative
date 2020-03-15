@@ -1,8 +1,9 @@
 import React from "react";
 import Axios from "axios";
-
+import { navigate } from "@reach/router";
 
 import { animations } from 'react-animation'
+import Fade from 'react-reveal/Fade';
 
 
 import "../css/animate.css";
@@ -18,7 +19,7 @@ import { MdDelete } from "react-icons/md";
 import { FaUserEdit } from "react-icons/fa";
 import { IoIosAddCircle } from "react-icons/io";
 
-const mystyle = {color: "red"}
+
 
 class GetData extends React.Component {
   constructor(props) {
@@ -26,8 +27,9 @@ class GetData extends React.Component {
 
     // console.log("hello from getData component");
 
-    this.state = { users: [] };
+    this.state = { users: [], zoom: false};
     // this.state = { FadeOut: false }
+
   }
 
   componentDidMount() {
@@ -43,7 +45,18 @@ class GetData extends React.Component {
     });
   };
 
+  handleZoom = e => {
 
+this.setState({zoom: true})
+    
+
+  }
+
+  navigateAdduser = e => {
+    navigate(`/addusers`);
+
+    
+  }
 
   render() {
 
@@ -54,11 +67,12 @@ class GetData extends React.Component {
       <div className="user_wrapper">
         <p>USERS</p>
 
-        <Link to="/addusers">
-          <IoIosAddCircle
+       
+        
+          <IoIosAddCircle onClick={this.handleZoom} className={this.state.zoom ? 'zoom' : null} onTransitionEnd={this.navigateAdduser}
             style={{ color: "lime", fontSize: "3.8em" }}
           />
-        </Link>
+        
 
         {this.state.users.map((person, i) => {
           return (
@@ -85,7 +99,9 @@ export class ShowData extends React.Component {
 
 
     // this.state = { FadeOut: false }
-    this.state = ({ deleted: false });
+    this.state = { visible: true }
+    
+    console.log(this.state)
   }
 
   deleteData = event => {
@@ -99,7 +115,11 @@ export class ShowData extends React.Component {
 
         if (res.data.result === true) {
 
-          this.setState({deleted: true})
+          this.setState({ visible: false });
+
+         
+
+          
           
         }
         
@@ -115,13 +135,26 @@ export class ShowData extends React.Component {
   //   });
   // };
 
+  test = (e) => {
+    if (e.propertyName == "opacity"){
+       this.props.getData()
+    }
+    // e.persist()
+    // window.pigg = e
+    // console.log("+++++ ", e)
+  
+  }
+  
+
   render() {
     
-    
-     
    
     return (
-      <div   className={this.state.deleted === true ? "animates fadeOut": "user_container"} style={{animation: animations.popIn}}>
+
+      <React.Fragment>
+
+        
+      <div className={this.state.visible ? 'user_container' : ' fadeOut' } onTransitionEnd={this.test} >
         <img src="https://placekitten.com/100/100" alt=""/>
         <h1>
           {this.props.name} {this.props.lastname}
@@ -134,6 +167,7 @@ export class ShowData extends React.Component {
           onClick={this.deleteData}
           style={{ color: "rgb(232, 61, 23)", fontSize: "1.8em" }}
         />
+        
 
         <Link to={`/editusers/${this.props.id}`}>
           <FaUserEdit
@@ -146,6 +180,8 @@ export class ShowData extends React.Component {
 
         
       </div>
+    
+      </React.Fragment>
 
       
     );

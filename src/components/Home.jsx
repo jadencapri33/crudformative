@@ -4,15 +4,24 @@ import { IoMdListBox } from "react-icons/io";
 import { FaUserCircle } from "react-icons/fa"
 import { Link } from "@reach/router";
 
+import { navigate } from "@reach/router";
+
 export default class Home extends Component {
+
+
+    naviageToUsers = e => {
+        navigate(`/getdata`);
+    }
+
+
     render() {
         return (
             <div className="home_wrapper">
                 
-                <div className="users_button">
+                <div onClick={this.naviageToUsers}  className="users_button">
 
        
-            {/* <Link to="/getdata"></Link> */}
+            
                     <FaUserCircle style={{ color:'white', fontSize: "4.8em" }}/>
                         <h1>Users</h1>
                        
