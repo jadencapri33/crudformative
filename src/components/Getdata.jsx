@@ -2,8 +2,7 @@ import React from "react";
 import Axios from "axios";
 import { navigate } from "@reach/router";
 
-import { animations } from 'react-animation'
-import Fade from 'react-reveal/Fade';
+
 
 
 import "../css/animate.css";
